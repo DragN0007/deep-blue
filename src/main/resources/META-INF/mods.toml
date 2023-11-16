@@ -56,9 +56,17 @@ versionRange = "[3.0.57,)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.deepblue]]
-modId = "bettas"
-mandatory = true
-versionRange = "[1.1,)"
-ordering="NONE"
-side="BOTH"
+#[[dependencies.deepblue]]
+#modId = "bettas"
+#mandatory = true
+#versionRange = "[1.1.0,)"
+#ordering="NONE"
+#side="BOTH"
+
+#[[dependencies.deepblue]]
+#modId = "terrablender"
+#mandatory = true
+#versionRange = "[1.2.0.126,)"
+#ordering="NONE"
+#side="BOTH"
+
