@@ -1,7 +1,10 @@
 {
-  "item.deepblue.greatwhite_spawn_egg": "Great White Spawn Egg",
-  "item.deepblue.greatwhite_net": "Great White Transport Net",
-  "entity.deepblue.greatwhite": "Great White Shark"
+  "item.deepblue.greatwhite_spawn_egg": "Great White Shark Spawn Egg",
+  "item.deepblue.greatwhite_net": "Great White Shark Transport Net",
+  "entity.deepblue.greatwhite": "Great White Shark",
+  "item.deepblue.mako_spawn_egg": "Mako Shark Spawn Egg",
+  "item.deepblue.mako_net": "Mako Shark Transport Net",
+  "entity.deepblue.mako": "Mako Shark"
 
 
 
