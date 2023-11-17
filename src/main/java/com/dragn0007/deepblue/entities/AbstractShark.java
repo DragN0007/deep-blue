@@ -1,7 +1,6 @@
 package com.dragn0007.deepblue.entities;
 
 import com.dragn0007.deepblue.entities.greatwhite.GreatWhite;
-import com.ibm.icu.text.AlphabeticIndex;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -44,7 +43,7 @@ import java.util.function.Predicate;
 
 public abstract class AbstractShark extends WaterAnimal implements NeutralMob, Bucketable {
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(AbstractShark.class, EntityDataSerializers.BOOLEAN);
-    private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
+    private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 50);
     private int remainingPersistentAngerTime;
     @Nullable
     private UUID persistentAngerTarget;
@@ -95,7 +94,7 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob, B
 
     public AbstractShark(EntityType<? extends AbstractShark> p_27461_, Level p_27462_) {
         super(p_27461_, p_27462_);
-//        this.moveControl = new AbstractShark.FishMoveControl(this);
+        this.moveControl = new AbstractShark.FishMoveControl(this);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
@@ -116,6 +115,7 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob, B
         this.targetSelector.addGoal(2, new AbstractShark.SharkAttackPlayersGoal());
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(4, new FollowBoatGoal(this));
+        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
 //        this.targetSelector.addGoal(3, new AbstractShark.SharkEatFishGoal());
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, GreatWhite.class, 10, true, true, (Predicate<LivingEntity>)null));
@@ -164,37 +164,37 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob, B
     }
 
     static class FishMoveControl extends MoveControl {
-        private final AbstractShark fish;
+        private final AbstractShark shark;
 
         FishMoveControl(AbstractShark p_27501_) {
             super(p_27501_);
-            this.fish = p_27501_;
+            this.shark = p_27501_;
         }
 
         public void tick() {
-            if (this.fish.isEyeInFluid(FluidTags.WATER)) {
-                this.fish.setDeltaMovement(this.fish.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
+            if (this.shark.isEyeInFluid(FluidTags.WATER)) {
+                this.shark.setDeltaMovement(this.shark.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
             }
 
-            if (this.operation == MoveControl.Operation.MOVE_TO && !this.fish.getNavigation().isDone()) {
-                float f = (float)(this.speedModifier * this.fish.getAttributeValue(Attributes.MOVEMENT_SPEED));
-                this.fish.setSpeed(Mth.lerp(0.125F, this.fish.getSpeed(), f));
-                double d0 = this.wantedX - this.fish.getX();
-                double d1 = this.wantedY - this.fish.getY();
-                double d2 = this.wantedZ - this.fish.getZ();
+            if (this.operation == MoveControl.Operation.MOVE_TO && !this.shark.getNavigation().isDone()) {
+                float f = (float)(this.speedModifier * this.shark.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                this.shark.setSpeed(Mth.lerp(0.125F, this.shark.getSpeed(), f));
+                double d0 = this.wantedX - this.shark.getX();
+                double d1 = this.wantedY - this.shark.getY();
+                double d2 = this.wantedZ - this.shark.getZ();
                 if (d1 != 0.0D) {
                     double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
-                    this.fish.setDeltaMovement(this.fish.getDeltaMovement().add(0.0D, (double)this.fish.getSpeed() * (d1 / d3) * 0.1D, 0.0D));
+                    this.shark.setDeltaMovement(this.shark.getDeltaMovement().add(0.0D, (double)this.shark.getSpeed() * (d1 / d3) * 0.1D, 0.0D));
                 }
 
                 if (d0 != 0.0D || d2 != 0.0D) {
                     float f1 = (float)(Mth.atan2(d2, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
-                    this.fish.setYRot(this.rotlerp(this.fish.getYRot(), f1, 90.0F));
-                    this.fish.yBodyRot = this.fish.getYRot();
+                    this.shark.setYRot(this.rotlerp(this.shark.getYRot(), f1, 90.0F));
+                    this.shark.yBodyRot = this.shark.getYRot();
                 }
 
             } else {
-                this.fish.setSpeed(0.0F);
+                this.shark.setSpeed(0.0F);
             }
         }
     }
@@ -232,7 +232,7 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob, B
             super(AbstractShark.this, Player.class, 20, true, true, (Predicate<LivingEntity>)null);
         }
         protected double getFollowDistance() {
-            return super.getFollowDistance() * 0.5D;
+            return super.getFollowDistance() * 1.5D;
         }
     }
     class SharkMeleeAttackGoal extends MeleeAttackGoal {
@@ -257,7 +257,6 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob, B
 
         }
     }
-
     public void startPersistentAngerTimer() {
         this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
     }
