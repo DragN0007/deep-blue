@@ -1,6 +1,7 @@
 package com.dragn0007.deepblue.entities.greatwhite;
 
 import com.dragn.bettas.BettasMain;
+import com.dragn0007.deepblue.deepblueitems.DeepBlueItems;
 import com.dragn0007.deepblue.entities.AbstractShark;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -16,7 +17,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Dolphin;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import software.bernie.geckolib3.core.AnimationState;
@@ -31,7 +32,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
 
 public class GreatWhite extends AbstractShark implements IAnimatable {
 
@@ -64,6 +64,18 @@ public class GreatWhite extends AbstractShark implements IAnimatable {
     protected SoundEvent getFlopSound() {
         return SoundEvents.ELDER_GUARDIAN_FLOP;
     }
+
+    //Net
+    public void saveToBucketTag(ItemStack itemStack) {
+        super.saveToBucketTag(itemStack);
+        CompoundTag compoundTag = itemStack.getOrCreateTag();
+        compoundTag.putInt("Variant", getTexture());
+    }
+    @Override
+    public ItemStack getBucketItemStack() {
+        return DeepBlueItems.GREATWHITE_NET.get().getDefaultInstance();
+    }
+
 
     private <E extends IAnimatable>PlayState predicate(AnimationEvent<E> event) {
 

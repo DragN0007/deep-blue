@@ -1,13 +1,20 @@
 package com.dragn0007.deepblue.entities;
 
 import com.dragn0007.deepblue.entities.greatwhite.GreatWhite;
+import com.ibm.icu.text.AlphabeticIndex;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -19,9 +26,12 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.entity.animal.*;
-import net.minecraft.world.entity.monster.Drowned;
+import net.minecraft.world.entity.animal.AbstractFish;
+import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.animal.Dolphin;
+import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,12 +42,56 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public abstract class AbstractShark extends WaterAnimal implements NeutralMob  {
-
+public abstract class AbstractShark extends WaterAnimal implements NeutralMob, Bucketable {
+    private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(AbstractShark.class, EntityDataSerializers.BOOLEAN);
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
     private int remainingPersistentAngerTime;
     @Nullable
     private UUID persistentAngerTarget;
+    public boolean requiresCustomPersistence() {
+        return super.requiresCustomPersistence() || this.fromBucket();
+    }
+
+    public boolean removeWhenFarAway(double p_27492_) {
+        return !this.fromBucket() && !this.hasCustomName();
+    }
+
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(FROM_BUCKET, false);
+    }
+    public boolean fromBucket() {
+        return this.entityData.get(FROM_BUCKET);
+    }
+
+    public void setFromBucket(boolean p_27498_) {
+        this.entityData.set(FROM_BUCKET, p_27498_);
+    }
+
+    public void addAdditionalSaveData(CompoundTag p_27485_) {
+        super.addAdditionalSaveData(p_27485_);
+        p_27485_.putBoolean("FromBucket", this.fromBucket());
+    }
+
+    public void readAdditionalSaveData(CompoundTag p_27465_) {
+        super.readAdditionalSaveData(p_27465_);
+        this.setFromBucket(p_27465_.getBoolean("FromBucket"));
+    }
+
+    public void saveToBucketTag(ItemStack p_27494_) {
+        Bucketable.saveDefaultDataToBucketTag(this, p_27494_);
+    }
+
+    public void loadFromBucketTag(CompoundTag p_148708_) {
+        Bucketable.loadDefaultDataFromBucketTag(this, p_148708_);
+    }
+
+    public SoundEvent getPickupSound() {
+        return SoundEvents.BUCKET_FILL_FISH;
+    }
+    protected InteractionResult mobInteract(Player p_27477_, InteractionHand p_27478_) {
+        return Bucketable.bucketMobPickup(p_27477_, p_27478_, this).orElse(super.mobInteract(p_27477_, p_27478_));
+    }
 
     public AbstractShark(EntityType<? extends AbstractShark> p_27461_, Level p_27462_) {
         super(p_27461_, p_27462_);
@@ -55,7 +109,7 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob  {
     }
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new AbstractShark.SharkMeleeAttackGoal());
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
+//        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Dolphin.class, 8.0F, 1.6D, 1.4D, EntitySelector.NO_SPECTATORS::test));
         this.goalSelector.addGoal(4, new AbstractShark.SharkSwimGoal(this));
         this.targetSelector.addGoal(1, new AbstractShark.SharkHurtByTargetGoal());
@@ -64,7 +118,7 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob  {
         this.goalSelector.addGoal(4, new FollowBoatGoal(this));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
 //        this.targetSelector.addGoal(3, new AbstractShark.SharkEatFishGoal());
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, GreatWhite.class, 100, true, true, (Predicate<LivingEntity>)null));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, GreatWhite.class, 10, true, true, (Predicate<LivingEntity>)null));
     }
 
     protected PathNavigation createNavigation(Level p_27480_) {
@@ -183,7 +237,7 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob  {
     }
     class SharkMeleeAttackGoal extends MeleeAttackGoal {
         public SharkMeleeAttackGoal() {
-            super(AbstractShark.this, 1.25D, true);
+            super(AbstractShark.this, 5D, true);
         }
         protected void checkAndPerformAttack(LivingEntity p_29589_, double p_29590_) {
             double d0 = this.getAttackReachSqr(p_29589_);
