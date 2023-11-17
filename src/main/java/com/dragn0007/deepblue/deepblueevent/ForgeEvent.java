@@ -14,7 +14,8 @@ public class ForgeEvent {
     public static void registerBiomes(BiomeLoadingEvent event) {
         switch (event.getCategory()) {
             case OCEAN -> {
-                event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(DeepBlueEvent.GREATWHITE.get(), 3, 1, 1));
+                event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(DeepBlueEvent.MAKO.get(), 3, 1, 1));
+                event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(DeepBlueEvent.GREATWHITE.get(), 1, 1, 1));
             }
             case SWAMP -> {
             }

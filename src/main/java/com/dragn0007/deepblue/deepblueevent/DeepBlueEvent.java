@@ -4,8 +4,12 @@ package com.dragn0007.deepblue.deepblueevent;
 import com.dragn.bettas.BettasMain;
 import com.dragn.bettas.decor.Decor;
 import com.dragn0007.deepblue.DeepBlueMain;
+import com.dragn0007.deepblue.entities.AbstractShark;
 import com.dragn0007.deepblue.entities.greatwhite.GreatWhite;
 import com.dragn0007.deepblue.entities.greatwhite.GreatWhiteRender;
+import com.dragn0007.deepblue.entities.mako.Mako;
+import com.dragn0007.deepblue.entities.mako.MakoRender;
+import it.unimi.dsi.fastutil.booleans.AbstractBooleanSet;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -26,23 +30,7 @@ import net.minecraftforge.registries.RegistryObject;
 @Mod.EventBusSubscriber(modid = DeepBlueMain.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DeepBlueEvent {
 
-    @SubscribeEvent
-    public static void entityAttrbiuteCreationEvent(EntityAttributeCreationEvent event) {
-        event.put(GREATWHITE.get(), GreatWhite.createAttributes().build());
 
-    }
-    @SubscribeEvent
-    public static void clientSetupEvent(FMLClientSetupEvent event) {
-
-        /* REGISTER RENDERERS */
-        EntityRenderers.register(GREATWHITE.get(), GreatWhiteRender::new);
-
-
-        /* REGISTER SPAWN PLACEMENTS */
-        SpawnPlacements.register(GREATWHITE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                GreatWhite::checkSharkSpawnRules);
-
-    }
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, DeepBlueMain.MODID);
 
     public static final RegistryObject<EntityType<GreatWhite>> GREATWHITE = ENTITY_TYPES.register
@@ -50,25 +38,42 @@ public class DeepBlueEvent {
                     (GreatWhite::new, MobCategory.WATER_AMBIENT).sized(2f, 2f).build(new ResourceLocation(DeepBlueMain.MODID,
                     "greatwhite").toString()));
 
-
-
+    public static final RegistryObject<EntityType<Mako>> MAKO = ENTITY_TYPES.register
+            ("mako", () -> EntityType.Builder.of
+                    (Mako::new, MobCategory.WATER_AMBIENT).sized(1f, 1f).build(new ResourceLocation(DeepBlueMain.MODID,
+                    "mako").toString()));
 
     @SubscribeEvent
-    public static void registerDecor(RegistryEvent.Register<Item> event) {
-        IForgeRegistry<Item> registry = event.getRegistry();
+    public static void entityAttrbiuteCreationEvent(EntityAttributeCreationEvent event) {
+        event.put(GREATWHITE.get(), GreatWhite.createAttributes().build());
+        event.put(MAKO.get(), GreatWhite.createAttributes().build());
 
-        BettasMain.BLOCKS.getEntries().forEach(registryObject -> {
-            if (registryObject != null) {
-                if (registryObject.get() instanceof Decor.Vanilla decor) {
-                    decor.init();
-                } else if (registryObject.get() instanceof Decor decor) {
-                    String name = decor.getRegistryName().getPath();
-
-                    Item item = (new Item(new Item.Properties().tab(BettasMain.TANK_TAB))).setRegistryName(name);
-                    registry.register(item);
-                    Decor.addMappings(decor, item);
-                }
-            }
-        });
     }
+    @SubscribeEvent
+    public static void clientSetupEvent(FMLClientSetupEvent event) {
+
+        /* ENTITY REGISTER RENDERERS & SPAWN PLACEMENTS */
+        EntityRenderers.register(GREATWHITE.get(), GreatWhiteRender::new);
+        SpawnPlacements.register(GREATWHITE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                AbstractShark::checkSharkSpawnRules);
+
+        EntityRenderers.register(MAKO.get(), MakoRender::new);
+        SpawnPlacements.register(MAKO.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                AbstractShark::checkSharkSpawnRules);
+
+
+
+
+
+        /* BLOCK REGISTER RENDERERS */
+
+
+
+
+    }
+
+
+
+
+
 }
