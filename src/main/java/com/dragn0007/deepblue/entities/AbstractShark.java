@@ -118,7 +118,7 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob, B
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
 //        this.targetSelector.addGoal(3, new AbstractShark.SharkEatFishGoal());
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, GreatWhite.class, 10, true, true, (Predicate<LivingEntity>)null));
+        //this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, GreatWhite.class, 10, true, true, (Predicate<LivingEntity>)null));
     }
 
     protected PathNavigation createNavigation(Level p_27480_) {
