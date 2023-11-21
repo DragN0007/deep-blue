@@ -1,8 +1,6 @@
 package com.dragn0007.deepblue.entities.bluewhale;
 
 import com.dragn0007.deepblue.DeepBlueMain;
-import com.dragn0007.deepblue.entities.greatwhite.GreatWhite;
-import com.dragn0007.deepblue.entities.greatwhite.GreatWhiteVariant;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
