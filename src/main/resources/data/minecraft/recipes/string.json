@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "deepblue:whale_baleen"
+    }
+  ],
+
+  "result": {
+    "item": "minecraft:string",
+    "count": 6
+  }
+}

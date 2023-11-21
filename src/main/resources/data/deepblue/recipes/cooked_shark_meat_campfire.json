@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "deepblue:shark_meat"
+  },
+  "result": "deepblue:cooked_shark_meat",
+  "experience": 0.80,
+  "cookingtime": 500
+}

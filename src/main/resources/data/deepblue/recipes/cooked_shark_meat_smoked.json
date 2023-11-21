@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "deepblue:shark_meat"
+  },
+  "result": "deepblue:cooked_shark_meat",
+  "experience": 0.60,
+  "cookingtime": 160
+}

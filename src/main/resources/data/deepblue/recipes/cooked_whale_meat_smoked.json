@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "deepblue:whale_meat"
+  },
+  "result": "deepblue:cooked_whale_meat",
+  "experience": 0.60,
+  "cookingtime": 160
+}

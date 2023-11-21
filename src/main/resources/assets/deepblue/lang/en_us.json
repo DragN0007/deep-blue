@@ -9,6 +9,14 @@
   "item.deepblue.bluewhale_net": "Blue Whale Transport Net",
   "entity.deepblue.bluewhale": "Blue Whale",
 
-  "block.deepblue.aqua_glass": "Clear Aquarium Glass"
+  "block.deepblue.aqua_glass": "Clear Aquarium Glass",
 
+  "item.deepblue.blubber": "Blubber",
+  "item.deepblue.cooked_shark_meat": "Cooked Shark Meat",
+  "item.deepblue.cooked_whale_meat": "Cooked Whale Meat",
+  "item.deepblue.shark_meat": "Raw Shark Meat",
+  "item.deepblue.whale_meat": "Raw Whale Meat",
+  "item.deepblue.shark_fin": "Shark Fin",
+  "item.deepblue.shark_leather": "Shark Leather",
+  "item.deepblue.whale_baleen": "Whale Baleen"
 }
