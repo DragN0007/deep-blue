@@ -1,6 +1,5 @@
 package com.dragn0007.deepblue.entities;
 
-import com.dragn0007.deepblue.entities.greatwhite.GreatWhite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -150,11 +149,26 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob, B
         super.aiStep();
     }
 
+    protected SoundEvent getAmbientSound() {
+        return null;
+    }
+
+    protected SoundEvent getDeathSound() {
+        return null;
+    }
+
+    protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
+        return SoundEvents.RAVAGER_HURT;
+    }
+
+    protected SoundEvent getFlopSound() {
+        return SoundEvents.ELDER_GUARDIAN_FLOP;
+    }
+
     protected boolean canRandomSwim() {
         return true;
     }
 
-    protected abstract SoundEvent getFlopSound();
 
     protected SoundEvent getSwimSound() {
         return SoundEvents.FISH_SWIM;
