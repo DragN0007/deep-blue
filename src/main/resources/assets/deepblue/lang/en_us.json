@@ -4,10 +4,11 @@
   "entity.deepblue.greatwhite": "Great White Shark",
   "item.deepblue.mako_spawn_egg": "Mako Shark Spawn Egg",
   "item.deepblue.mako_net": "Mako Shark Transport Net",
-  "entity.deepblue.mako": "Mako Shark"
+  "entity.deepblue.mako": "Mako Shark",
+  "item.deepblue.bluewhale_spawn_egg": "Blue Whale Spawn Egg",
+  "item.deepblue.bluewhale_net": "Blue Whale Transport Net",
+  "entity.deepblue.bluewhale": "Blue Whale",
 
-
-
-
+  "block.deepblue.aqua_glass": "Clear Aquarium Glass"
 
 }

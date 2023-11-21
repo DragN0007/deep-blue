@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "deepblue:block/aquarium_glass"
+  }
+}
