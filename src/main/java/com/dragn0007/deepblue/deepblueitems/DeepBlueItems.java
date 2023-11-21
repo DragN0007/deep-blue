@@ -4,7 +4,9 @@ package com.dragn0007.deepblue.deepblueitems;
 import com.dragn0007.deepblue.DeepBlueMain;
 import com.dragn0007.deepblue.deepblueevent.DeepBlueEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -25,6 +27,9 @@ public class DeepBlueItems {
 
     public static final RegistryObject<ForgeSpawnEggItem> MAKO_SPAWN_EGG = ITEMS.register("mako_spawn_egg", () -> new ForgeSpawnEggItem(DeepBlueEvent.MAKO, 0x5f83a5, 0xd6d6d6, new Item.Properties().stacksTo(64).tab(BETTAS_TAB)));
     public static final RegistryObject<BucketItem> MAKO_NET = ITEMS.register("mako_net", () -> new MobBucketItem(DeepBlueEvent.MAKO, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(BETTAS_TAB)));
+
+    public static final RegistryObject<ForgeSpawnEggItem> BLUEWHALE_SPAWN_EGG = ITEMS.register("bluewhale_spawn_egg", () -> new ForgeSpawnEggItem(DeepBlueEvent.BLUEWHALE, 0x314457, 0xc9c9c0, new Item.Properties().stacksTo(64).tab(BETTAS_TAB)));
+    public static final RegistryObject<BucketItem> BLUEWHALE_NET = ITEMS.register("bluewhale_net", () -> new MobBucketItem(DeepBlueEvent.BLUEWHALE, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(BETTAS_TAB)));
 
 
 
