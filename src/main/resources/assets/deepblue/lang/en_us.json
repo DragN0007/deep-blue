@@ -9,6 +9,14 @@
   "item.deepblue.bluewhale_net": "Blue Whale Transport Net",
   "entity.deepblue.bluewhale": "Blue Whale",
 
+  "item.deepblue.krill_spawn_egg": "Krill Spawn Egg",
+  "item.deepblue.krill_item": "Krill",
+  "entity.deepblue.krill": "Krill Swarm",
+  "item.deepblue.shrimp_spawn_egg": "Shrimp Spawn Egg",
+  "item.deepblue.shrimp_item": "Shrimp",
+  "item.deepblue.cooked_shrimp": "Cooked Shrimp",
+  "entity.deepblue.shrimp": "Shrimp Swarm",
+
   "block.deepblue.aqua_glass": "Clear Aquarium Glass",
 
   "item.deepblue.blubber": "Blubber",

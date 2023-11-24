@@ -1,5 +1,10 @@
 package com.dragn0007.deepblue.entities;
 
+import com.dragn0007.deepblue.deepblueevent.DeepBlueEvent;
+import com.dragn0007.deepblue.deepblueitems.DeepBlueItems;
+import com.dragn0007.deepblue.entities.krill_swarm.KrillSwarm;
+import com.dragn0007.deepblue.entities.shrimp_swarm.ShrimpSwarm;
+import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -13,27 +18,33 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Random;
+import java.util.Set;
+import java.util.function.Predicate;
 
 public abstract class AbstractMarineMammal extends WaterAnimal implements Bucketable {
     protected AbstractMarineMammal(EntityType<? extends AbstractMarineMammal> p_30341_, Level p_30342_) {
@@ -42,6 +53,8 @@ public abstract class AbstractMarineMammal extends WaterAnimal implements Bucket
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
+    private static final Ingredient FOOD_ITEMS = Ingredient.of(DeepBlueItems.KRILL_ITEM.get(), DeepBlueItems.SHRIMP_ITEM.get(), Items.COD, Items.SALMON);
+
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(AbstractMarineMammal.class, EntityDataSerializers.BOOLEAN);
 
     public boolean requiresCustomPersistence() {
@@ -94,9 +107,12 @@ public abstract class AbstractMarineMammal extends WaterAnimal implements Bucket
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(2, new AbstractMarineMammal.WhaleSwimWithPlayerGoal(this, 4.0D));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
-//        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(DeepBlueItems.KRILL_ITEM.get(), DeepBlueItems.SHRIMP_ITEM.get(), Items.COD, Items.SALMON), false));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(8, new FollowBoatGoal(this));
+        this.targetSelector.addGoal(4, new MeleeAttackGoal(this, 2f, false));
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, KrillSwarm.class, false));
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, ShrimpSwarm.class, false));
         this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, AbstractShark.class, 8.0F, 1.0D, 1.0D));
     }
 
@@ -178,7 +194,6 @@ public abstract class AbstractMarineMammal extends WaterAnimal implements Bucket
     public boolean canBeLeashed(Player p_30346_) {
         return false;
     }
-
 
 
     static final TargetingConditions SWIM_WITH_PLAYER_TARGETING = TargetingConditions.forNonCombat().range(10.0D).ignoreLineOfSight();

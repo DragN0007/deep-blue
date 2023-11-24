@@ -4,13 +4,9 @@ package com.dragn0007.deepblue.deepblueitems;
 import com.dragn0007.deepblue.DeepBlueMain;
 import com.dragn0007.deepblue.deepblueevent.DeepBlueEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.inventory.FurnaceFuelSlot;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -36,6 +32,8 @@ public class DeepBlueItems {
     public static final RegistryObject<ForgeSpawnEggItem> BLUEWHALE_SPAWN_EGG = ITEMS.register("bluewhale_spawn_egg", () -> new ForgeSpawnEggItem(DeepBlueEvent.BLUEWHALE, 0x314457, 0xc9c9c0, new Item.Properties().stacksTo(64).tab(BETTAS_TAB)));
     public static final RegistryObject<BucketItem> BLUEWHALE_NET = ITEMS.register("bluewhale_net", () -> new MobBucketItem(DeepBlueEvent.BLUEWHALE, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(BETTAS_TAB)));
 
+    public static final RegistryObject<ForgeSpawnEggItem> KRILL_SPAWN_EGG = ITEMS.register("krill_spawn_egg", () -> new ForgeSpawnEggItem(DeepBlueEvent.KRILL, 0xe87171, 0xcec9b9b, new Item.Properties().stacksTo(64).tab(BETTAS_TAB)));
+    public static final RegistryObject<ForgeSpawnEggItem> SHRIMP_SPAWN_EGG = ITEMS.register("shrimp_spawn_egg", () -> new ForgeSpawnEggItem(DeepBlueEvent.SHRIMP, 0xef644e, 0xf9a48d, new Item.Properties().stacksTo(64).tab(BETTAS_TAB)));
 
 
     //Loot
@@ -49,6 +47,15 @@ public class DeepBlueItems {
     public static final RegistryObject<Item> COOKED_WHALE_MEAT = ITEMS.register("cooked_whale_meat",
             () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(12).saturationMod(1).meat().build()).tab(BETTAS_TAB)));
 
+    public static final RegistryObject<Item> KRILL_ITEM = ITEMS.register("krill_item",
+            () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0).meat().build()).tab(BETTAS_TAB)));
+
+    public static final RegistryObject<Item> SHRIMP_ITEM = ITEMS.register("shrimp_item",
+            () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0).meat().build()).tab(BETTAS_TAB)));
+    public static final RegistryObject<Item> COOKED_SHRIMP = ITEMS.register("cooked_shrimp",
+            () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(1).meat().build()).tab(BETTAS_TAB)));
+
+
     public static final RegistryObject<Item> WHALE_BALEEN = ITEMS.register("whale_baleen",
             () -> new Item(new Item.Properties().tab(BETTAS_TAB)));
     public static final RegistryObject<Item> BLUBBER = ITEMS.register("blubber",
@@ -57,8 +64,6 @@ public class DeepBlueItems {
             () -> new Item(new Item.Properties().tab(BETTAS_TAB)));
     public static final RegistryObject<Item> SHARK_FIN = ITEMS.register("shark_fin",
             () -> new Item(new Item.Properties().tab(BETTAS_TAB)));
-
-
 
 
     public static void register(IEventBus eventBus) {

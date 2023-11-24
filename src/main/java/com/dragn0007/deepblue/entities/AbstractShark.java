@@ -1,5 +1,8 @@
 package com.dragn0007.deepblue.entities;
 
+import com.dragn0007.deepblue.deepblueitems.DeepBlueItems;
+import com.dragn0007.deepblue.entities.krill_swarm.KrillSwarm;
+import com.dragn0007.deepblue.entities.shrimp_swarm.ShrimpSwarm;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -24,12 +27,11 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.entity.animal.AbstractFish;
-import net.minecraft.world.entity.animal.Bucketable;
-import net.minecraft.world.entity.animal.Dolphin;
-import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -107,17 +109,17 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob, B
     }
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new AbstractShark.SharkMeleeAttackGoal());
-//        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Dolphin.class, 8.0F, 1.6D, 1.4D, EntitySelector.NO_SPECTATORS::test));
         this.goalSelector.addGoal(4, new AbstractShark.SharkSwimGoal(this));
         this.targetSelector.addGoal(1, new AbstractShark.SharkHurtByTargetGoal());
         this.targetSelector.addGoal(2, new AbstractShark.SharkAttackPlayersGoal());
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(4, new FollowBoatGoal(this));
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Cod.class, false));
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, TropicalFish.class, false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.COD, Items.SALMON, Items.BEEF, Items.CHICKEN), false));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
-//        this.targetSelector.addGoal(3, new AbstractShark.SharkEatFishGoal());
-        //this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, GreatWhite.class, 10, true, true, (Predicate<LivingEntity>)null));
     }
 
     protected PathNavigation createNavigation(Level p_27480_) {
