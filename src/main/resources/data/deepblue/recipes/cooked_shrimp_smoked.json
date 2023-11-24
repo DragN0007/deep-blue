@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "deepblue:shrimp_item"
+  },
+  "result": "deepblue:cooked_shrimp",
+  "experience": 0.60,
+  "cookingtime": 160
+}

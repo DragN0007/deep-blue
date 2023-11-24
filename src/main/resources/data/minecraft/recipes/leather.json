@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "deepblue:shark_leather"
+    }
+  ],
+
+  "result": {
+    "item": "minecraft:leather",
+    "count": 2
+  }
+}
