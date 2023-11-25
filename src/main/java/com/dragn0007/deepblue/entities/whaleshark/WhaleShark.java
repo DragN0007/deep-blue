@@ -1,23 +1,32 @@
-package com.dragn0007.deepblue.entities.bluewhale;
+package com.dragn0007.deepblue.entities.whaleshark;
 
 import com.dragn.bettas.BettasMain;
 import com.dragn0007.deepblue.deepblueitems.DeepBlueItems;
 import com.dragn0007.deepblue.entities.AbstractMarineMammal;
-import com.dragn0007.deepblue.entities.AbstractSchoolingMarineMammal;
+import com.dragn0007.deepblue.entities.AbstractShark;
+import com.dragn0007.deepblue.entities.greatwhite.GreatWhiteVariant;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.Dolphin;
+import net.minecraft.world.entity.animal.TropicalFish;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -30,24 +39,37 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
-public class BlueWhale extends AbstractSchoolingMarineMammal implements IAnimatable {
+public class WhaleShark extends AbstractMarineMammal implements IAnimatable {
+//   I know he isnt a mammal. DO NOT COME FOR ME!
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 50d)
-                .add(Attributes.MOVEMENT_SPEED, 20d)
-                .add(Attributes.ATTACK_DAMAGE, 20f);
+                .add(Attributes.MAX_HEALTH, 35d)
+                .add(Attributes.MOVEMENT_SPEED, 10d)
+                .add(Attributes.ATTACK_DAMAGE, 8f);
     }
 
-    public BlueWhale(EntityType<? extends AbstractSchoolingMarineMammal> entity, Level level) {
+    public WhaleShark(EntityType<? extends AbstractMarineMammal> entity, Level level) {
         super(entity, level);
         this.noCulling = true;
     }
 
-    public int getMaxSchoolSize() {
-        return 2;
+    protected SoundEvent getAmbientSound() {
+        return null;
+    }
+
+    protected SoundEvent getDeathSound() {
+        return null;
+    }
+
+    protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
+        return SoundEvents.RAVAGER_HURT;
+    }
+
+    protected SoundEvent getFlopSound() {
+        return SoundEvents.ELDER_GUARDIAN_FLOP;
     }
 
     //Net
@@ -58,13 +80,17 @@ public class BlueWhale extends AbstractSchoolingMarineMammal implements IAnimata
     }
     @Override
     public ItemStack getBucketItemStack() {
-        return DeepBlueItems.BLUEWHALE_NET.get().getDefaultInstance();
+        return DeepBlueItems.WHALESHARK_NET.get().getDefaultInstance();
     }
 
 
     private <E extends IAnimatable>PlayState predicate(AnimationEvent<E> event) {
 
         if (event.isMoving()) {
+            if (isAggressive()) {
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("swimfast", ILoopType.EDefaultLoopTypes.LOOP));
+
+            } else
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", ILoopType.EDefaultLoopTypes.LOOP));
 
         } else
@@ -73,12 +99,22 @@ public class BlueWhale extends AbstractSchoolingMarineMammal implements IAnimata
         return PlayState.CONTINUE;
     }
 
+    private PlayState attackPredicate(AnimationEvent event) {
+        if (this.swinging && event.getController().getAnimationState().equals(AnimationState.Stopped)) {
+            event.getController().markNeedsReload();
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("bite", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+            this.swinging = false;
+        }
+
+        return PlayState.CONTINUE;
+    }
 
 
     //Controls animations
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController(this,"controller",5,this::predicate));
+        data.addAnimationController(new AnimationController(this,"attackController",5,this::attackPredicate));
     }
 
     @Override
@@ -88,7 +124,7 @@ public class BlueWhale extends AbstractSchoolingMarineMammal implements IAnimata
 
 
 
-    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(BlueWhale.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(WhaleShark.class, EntityDataSerializers.INT);
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -122,7 +158,7 @@ public class BlueWhale extends AbstractSchoolingMarineMammal implements IAnimata
         if(compoundTag != null && compoundTag.contains("Variant")) {
             setTexture(compoundTag.getInt("Variant"));
         } else {
-            setTexture(BettasMain.RANDOM.nextInt(BlueWhaleVariant.values().length));
+            setTexture(BettasMain.RANDOM.nextInt(WhaleSharkVariant.values().length));
         }
         return super.finalizeSpawn(levelAccessor, difficultyInstance, mobSpawnType, spawnGroupData, compoundTag);
     }

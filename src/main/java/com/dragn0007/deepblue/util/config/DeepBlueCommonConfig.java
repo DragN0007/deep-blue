@@ -33,8 +33,8 @@ public class DeepBlueCommonConfig {
         BLUEWHALE_WEIGHT = BUILDER.comment("How often should this creature spawn? Default is 1.")
                 .define("Blue Whale Spawn Weight", 1);
 
-        WHALESHARK_WEIGHT = BUILDER.comment("How often should this creature spawn? Default is 4.")
-                .define("Whale Shark Spawn Weight", 4);
+        WHALESHARK_WEIGHT = BUILDER.comment("How often should this creature spawn? Default is 1.")
+                .define("Whale Shark Spawn Weight", 1);
 
         BELUGA_WEIGHT = BUILDER.comment("How often should this creature spawn? Default is 4.")
                 .define("Beluga Whale Spawn Weight", 4);

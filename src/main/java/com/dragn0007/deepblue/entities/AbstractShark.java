@@ -115,7 +115,6 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob, B
         this.targetSelector.addGoal(2, new AbstractShark.SharkAttackPlayersGoal());
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(4, new FollowBoatGoal(this));
-        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Cod.class, false));
         this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, TropicalFish.class, false));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.COD, Items.SALMON, Items.BEEF, Items.CHICKEN), false));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));

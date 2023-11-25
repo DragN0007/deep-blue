@@ -16,6 +16,8 @@ import com.dragn0007.deepblue.entities.mako.Mako;
 import com.dragn0007.deepblue.entities.mako.MakoRender;
 import com.dragn0007.deepblue.entities.shrimp_swarm.ShrimpSwarm;
 import com.dragn0007.deepblue.entities.shrimp_swarm.ShrimpSwarmRender;
+import com.dragn0007.deepblue.entities.whaleshark.WhaleShark;
+import com.dragn0007.deepblue.entities.whaleshark.WhaleSharkRender;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -50,6 +52,10 @@ public class DeepBlueEvent {
             ("bluewhale", () -> EntityType.Builder.of
                     (BlueWhale::new, MobCategory.WATER_AMBIENT).sized(5f, 5f).build(new ResourceLocation(DeepBlueMain.MODID,
                     "bluewhale").toString()));
+    public static final RegistryObject<EntityType<WhaleShark>> WHALESHARK = ENTITY_TYPES.register
+            ("whaleshark", () -> EntityType.Builder.of
+                    (WhaleShark::new, MobCategory.WATER_AMBIENT).sized(4f, 4f).build(new ResourceLocation(DeepBlueMain.MODID,
+                    "whaleshark").toString()));
     public static final RegistryObject<EntityType<KrillSwarm>> KRILL = ENTITY_TYPES.register
             ("krill", () -> EntityType.Builder.of
                     (KrillSwarm::new, MobCategory.WATER_AMBIENT).sized(0.5f, 0.5f).build(new ResourceLocation(DeepBlueMain.MODID,
@@ -64,6 +70,7 @@ public class DeepBlueEvent {
         event.put(GREATWHITE.get(), GreatWhite.createAttributes().build());
         event.put(MAKO.get(), GreatWhite.createAttributes().build());
         event.put(BLUEWHALE.get(), BlueWhale.createAttributes().build());
+        event.put(WHALESHARK.get(), WhaleShark.createAttributes().build());
         event.put(KRILL.get(), KrillSwarm.createAttributes().build());
         event.put(SHRIMP.get(), ShrimpSwarm.createAttributes().build());
     }
@@ -81,6 +88,10 @@ public class DeepBlueEvent {
 
         EntityRenderers.register(BLUEWHALE.get(), BlueWhaleRender::new);
         SpawnPlacements.register(BLUEWHALE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                AbstractMarineMammal::checkWhaleSpawnRules);
+
+        EntityRenderers.register(WHALESHARK.get(), WhaleSharkRender::new);
+        SpawnPlacements.register(WHALESHARK.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 AbstractMarineMammal::checkWhaleSpawnRules);
 
         EntityRenderers.register(KRILL.get(), KrillSwarmRender::new);
