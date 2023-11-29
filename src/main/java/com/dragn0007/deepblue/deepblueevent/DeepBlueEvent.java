@@ -9,6 +9,8 @@ import com.dragn0007.deepblue.entities.bluewhale.BlueWhale;
 import com.dragn0007.deepblue.entities.bluewhale.BlueWhaleRender;
 import com.dragn0007.deepblue.entities.greatwhite.GreatWhite;
 import com.dragn0007.deepblue.entities.greatwhite.GreatWhiteRender;
+import com.dragn0007.deepblue.entities.hammerhead.Hammerhead;
+import com.dragn0007.deepblue.entities.hammerhead.HammerheadRender;
 import com.dragn0007.deepblue.entities.krill_swarm.KrillSwarm;
 import com.dragn0007.deepblue.entities.krill_swarm.KrillSwarmRender;
 import com.dragn0007.deepblue.entities.krill_swarm.KrillSwarmVariant;
@@ -56,6 +58,10 @@ public class DeepBlueEvent {
             ("whaleshark", () -> EntityType.Builder.of
                     (WhaleShark::new, MobCategory.WATER_AMBIENT).sized(4f, 4f).build(new ResourceLocation(DeepBlueMain.MODID,
                     "whaleshark").toString()));
+    public static final RegistryObject<EntityType<Hammerhead>> HAMMERHEAD = ENTITY_TYPES.register
+            ("hammerhead", () -> EntityType.Builder.of
+                    (Hammerhead::new, MobCategory.WATER_AMBIENT).sized(1.5f, 1.5f).build(new ResourceLocation(DeepBlueMain.MODID,
+                    "hammerhead").toString()));
     public static final RegistryObject<EntityType<KrillSwarm>> KRILL = ENTITY_TYPES.register
             ("krill", () -> EntityType.Builder.of
                     (KrillSwarm::new, MobCategory.WATER_AMBIENT).sized(0.5f, 0.5f).build(new ResourceLocation(DeepBlueMain.MODID,
@@ -71,6 +77,7 @@ public class DeepBlueEvent {
         event.put(MAKO.get(), GreatWhite.createAttributes().build());
         event.put(BLUEWHALE.get(), BlueWhale.createAttributes().build());
         event.put(WHALESHARK.get(), WhaleShark.createAttributes().build());
+        event.put(HAMMERHEAD.get(), WhaleShark.createAttributes().build());
         event.put(KRILL.get(), KrillSwarm.createAttributes().build());
         event.put(SHRIMP.get(), ShrimpSwarm.createAttributes().build());
     }
@@ -93,6 +100,10 @@ public class DeepBlueEvent {
         EntityRenderers.register(WHALESHARK.get(), WhaleSharkRender::new);
         SpawnPlacements.register(WHALESHARK.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 AbstractMarineMammal::checkWhaleSpawnRules);
+
+        EntityRenderers.register(HAMMERHEAD.get(), HammerheadRender::new);
+        SpawnPlacements.register(HAMMERHEAD.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                AbstractShark::checkSharkSpawnRules);
 
         EntityRenderers.register(KRILL.get(), KrillSwarmRender::new);
         SpawnPlacements.register(KRILL.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
