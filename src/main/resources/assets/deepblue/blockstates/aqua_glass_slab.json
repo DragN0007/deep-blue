@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "deepblue:block/aqua_glass_slab"
+    },
+    "type=double": {
+      "model": "deepblue:block/aqua_glass"
+    },
+    "type=top": {
+      "model": "deepblue:block/aqua_glass_slab_top"
+    }
+  }
+}

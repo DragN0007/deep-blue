@@ -117,6 +117,7 @@ public class DeepBlueEvent {
 
         /* BLOCK REGISTER RENDERERS */
         ItemBlockRenderTypes.setRenderLayer(DeepBlueBlocks.AQUA_GLASS.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(DeepBlueBlocks.AQUA_GLASS_SLAB.get(), RenderType.translucent());
 
 
 

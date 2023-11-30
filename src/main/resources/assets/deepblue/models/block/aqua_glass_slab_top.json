@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "deepblue:block/aquarium_glass",
+    "top": "deepblue:block/aquarium_glass",
+    "side": "deepblue:block/aquarium_glass"
+  }
+}

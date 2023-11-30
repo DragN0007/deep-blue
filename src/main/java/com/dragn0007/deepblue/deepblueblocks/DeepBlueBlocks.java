@@ -2,14 +2,14 @@ package com.dragn0007.deepblue.deepblueblocks;
 
 import com.dragn.bettas.BettasMain;
 import com.dragn0007.deepblue.DeepBlueMain;
+import com.dragn0007.deepblue.deepblueblocks.vox.Platform;
+import com.dragn0007.deepblue.deepblueblocks.vox.Trashcan;
 import com.dragn0007.deepblue.deepblueitems.DeepBlueItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.GlassBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -25,10 +25,15 @@ public class DeepBlueBlocks {
             = DeferredRegister.create(ForgeRegistries.BLOCKS, DeepBlueMain.MODID);
 
     public static final RegistryObject<Block> AQUA_GLASS = registerBlock("aqua_glass",
-            () -> new GlassBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS)
+            () -> new GlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS).strength(0.3F).sound(SoundType.GLASS)
                     .noOcclusion().isViewBlocking(DeepBlueBlocks::never)));
-
-
+    public static final RegistryObject<Block> AQUA_GLASS_SLAB = registerBlock("aqua_glass_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.GLASS).strength(0.3F).sound(SoundType.GLASS)
+                    .noOcclusion().isViewBlocking(DeepBlueBlocks::never)));
+    public static final RegistryObject<Block> PLATFORM = registerBlock("platform",
+            () -> new Platform());
+    public static final RegistryObject<Block> TRASHCAN = registerBlock("trashcan",
+            () -> new Trashcan());
 
 
 

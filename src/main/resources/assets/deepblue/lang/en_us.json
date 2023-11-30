@@ -23,6 +23,9 @@
   "entity.deepblue.shrimp": "Shrimp Swarm",
 
   "block.deepblue.aqua_glass": "Clear Aquarium Glass",
+  "block.deepblue.aqua_glass_slab": "Clear Aquarium Glass Slab",
+  "block.deepblue.trashcan": "Commercial Aquarium Trashcan",
+  "block.deepblue.platform": "Aquarium Platform",
 
   "item.deepblue.blubber": "Blubber",
   "item.deepblue.cooked_shark_meat": "Cooked Shark Meat",
