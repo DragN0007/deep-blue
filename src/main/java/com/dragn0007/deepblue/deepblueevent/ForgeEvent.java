@@ -15,6 +15,7 @@ public class ForgeEvent {
     public static void registerBiomes(BiomeLoadingEvent event) {
         switch (event.getCategory()) {
             case OCEAN -> {
+                event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(DeepBlueEvent.COEL.get(), DeepBlueCommonConfig.COELACANTH_WEIGHT.get(), 1, 2));
                 event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(DeepBlueEvent.HAMMERHEAD.get(), DeepBlueCommonConfig.HAMMERHEAD_WEIGHT.get(), 1, 2));
                 event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(DeepBlueEvent.WHALESHARK.get(), DeepBlueCommonConfig.WHALESHARK_WEIGHT.get(), 1, 1));
                 event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(DeepBlueEvent.SHRIMP.get(), DeepBlueCommonConfig.SHRIMPSWARM_WEIGHT.get(), 1, 3));

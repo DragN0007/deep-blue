@@ -7,6 +7,8 @@ import com.dragn0007.deepblue.entities.AbstractMarineMammal;
 import com.dragn0007.deepblue.entities.AbstractShark;
 import com.dragn0007.deepblue.entities.bluewhale.BlueWhale;
 import com.dragn0007.deepblue.entities.bluewhale.BlueWhaleRender;
+import com.dragn0007.deepblue.entities.coelacanth.Coel;
+import com.dragn0007.deepblue.entities.coelacanth.CoelRender;
 import com.dragn0007.deepblue.entities.greatwhite.GreatWhite;
 import com.dragn0007.deepblue.entities.greatwhite.GreatWhiteRender;
 import com.dragn0007.deepblue.entities.hammerhead.Hammerhead;
@@ -62,6 +64,10 @@ public class DeepBlueEvent {
             ("hammerhead", () -> EntityType.Builder.of
                     (Hammerhead::new, MobCategory.WATER_AMBIENT).sized(1.5f, 1.5f).build(new ResourceLocation(DeepBlueMain.MODID,
                     "hammerhead").toString()));
+    public static final RegistryObject<EntityType<Coel>> COEL = ENTITY_TYPES.register
+            ("coel", () -> EntityType.Builder.of
+                    (Coel::new, MobCategory.WATER_AMBIENT).sized(0.7f, 0.7f).build(new ResourceLocation(DeepBlueMain.MODID,
+                    "coel").toString()));
     public static final RegistryObject<EntityType<KrillSwarm>> KRILL = ENTITY_TYPES.register
             ("krill", () -> EntityType.Builder.of
                     (KrillSwarm::new, MobCategory.WATER_AMBIENT).sized(0.5f, 0.5f).build(new ResourceLocation(DeepBlueMain.MODID,
@@ -77,7 +83,8 @@ public class DeepBlueEvent {
         event.put(MAKO.get(), GreatWhite.createAttributes().build());
         event.put(BLUEWHALE.get(), BlueWhale.createAttributes().build());
         event.put(WHALESHARK.get(), WhaleShark.createAttributes().build());
-        event.put(HAMMERHEAD.get(), WhaleShark.createAttributes().build());
+        event.put(HAMMERHEAD.get(), Hammerhead.createAttributes().build());
+        event.put(COEL.get(), Coel.createAttributes().build());
         event.put(KRILL.get(), KrillSwarm.createAttributes().build());
         event.put(SHRIMP.get(), ShrimpSwarm.createAttributes().build());
     }
@@ -104,6 +111,10 @@ public class DeepBlueEvent {
         EntityRenderers.register(HAMMERHEAD.get(), HammerheadRender::new);
         SpawnPlacements.register(HAMMERHEAD.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 AbstractShark::checkSharkSpawnRules);
+
+        EntityRenderers.register(COEL.get(), CoelRender::new);
+        SpawnPlacements.register(COEL.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Coel::checkGenericFreshwaterSpawnRules);
 
         EntityRenderers.register(KRILL.get(), KrillSwarmRender::new);
         SpawnPlacements.register(KRILL.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,

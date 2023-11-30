@@ -38,6 +38,9 @@ public class DeepBlueItems {
     public static final RegistryObject<ForgeSpawnEggItem> HAMMERHEAD_SPAWN_EGG = ITEMS.register("hammerhead_spawn_egg", () -> new ForgeSpawnEggItem(DeepBlueEvent.HAMMERHEAD, 0x757575, 0xd4d4d4, new Item.Properties().stacksTo(64).tab(BETTAS_TAB)));
     public static final RegistryObject<BucketItem> HAMMERHEAD_NET = ITEMS.register("hammerhead_net", () -> new MobBucketItem(DeepBlueEvent.HAMMERHEAD, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(BETTAS_TAB)));
 
+    public static final RegistryObject<ForgeSpawnEggItem> COEL_SPAWN_EGG = ITEMS.register("coel_spawn_egg", () -> new ForgeSpawnEggItem(DeepBlueEvent.COEL, 0x5681a8, 0xa3cb40, new Item.Properties().stacksTo(64).tab(BETTAS_TAB)));
+    public static final RegistryObject<BucketItem> COEL_BUCKET = ITEMS.register("coel_bucket", () -> new MobBucketItem(DeepBlueEvent.COEL, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(BETTAS_TAB)));
+
     public static final RegistryObject<ForgeSpawnEggItem> KRILL_SPAWN_EGG = ITEMS.register("krill_spawn_egg", () -> new ForgeSpawnEggItem(DeepBlueEvent.KRILL, 0xe87171, 0xcec9b9b, new Item.Properties().stacksTo(64).tab(BETTAS_TAB)));
     public static final RegistryObject<ForgeSpawnEggItem> SHRIMP_SPAWN_EGG = ITEMS.register("shrimp_spawn_egg", () -> new ForgeSpawnEggItem(DeepBlueEvent.SHRIMP, 0xef644e, 0xf9a48d, new Item.Properties().stacksTo(64).tab(BETTAS_TAB)));
 

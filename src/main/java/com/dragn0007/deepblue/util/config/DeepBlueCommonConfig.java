@@ -42,8 +42,8 @@ public class DeepBlueCommonConfig {
         LIONMANEJELLY_WEIGHT = BUILDER.comment("How often should this creature? Default is 8.")
                 .define("Lion's Mane Jellyfish Spawn Weight", 8);
 
-        COELACANTH_WEIGHT = BUILDER.comment("How often should this creature spawn? Default is 10.")
-                .define("Coelacanth Spawn Weight", 10);
+        COELACANTH_WEIGHT = BUILDER.comment("How often should this creature spawn? Default is 3.")
+                .define("Coelacanth Spawn Weight", 3);
 
         HAMMERHEAD_WEIGHT = BUILDER.comment("How often should this creature spawn? Default is 2.")
                 .define("Hammerhead Shark Spawn Weight", 2);
