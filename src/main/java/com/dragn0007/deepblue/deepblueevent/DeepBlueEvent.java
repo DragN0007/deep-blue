@@ -91,6 +91,16 @@ public class DeepBlueEvent {
     @SubscribeEvent
     public static void clientSetupEvent(FMLClientSetupEvent event) {
 
+        /* BLOCK REGISTER RENDERERS */
+        ItemBlockRenderTypes.setRenderLayer(DeepBlueBlocks.AQUA_GLASS.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(DeepBlueBlocks.AQUA_GLASS_SLAB.get(), RenderType.translucent());
+
+
+
+    }
+
+
+    public static void registerSpawnPlacementsOnServer() {
         /* ENTITY REGISTER RENDERERS & SPAWN PLACEMENTS */
         EntityRenderers.register(GREATWHITE.get(), GreatWhiteRender::new);
         SpawnPlacements.register(GREATWHITE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
@@ -123,19 +133,6 @@ public class DeepBlueEvent {
         EntityRenderers.register(SHRIMP.get(), ShrimpSwarmRender::new);
         SpawnPlacements.register(SHRIMP.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 ShrimpSwarm::checkSwarmSpawnRules);
-
-
-
-        /* BLOCK REGISTER RENDERERS */
-        ItemBlockRenderTypes.setRenderLayer(DeepBlueBlocks.AQUA_GLASS.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(DeepBlueBlocks.AQUA_GLASS_SLAB.get(), RenderType.translucent());
-
-
-
     }
-
-
-
-
 
 }

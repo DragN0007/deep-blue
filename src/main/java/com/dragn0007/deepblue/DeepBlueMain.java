@@ -1,5 +1,6 @@
 package com.dragn0007.deepblue;
 
+import com.dragn.bettas.event.BettaEvent;
 import com.dragn0007.deepblue.deepblueblocks.DeepBlueBlocks;
 import com.dragn0007.deepblue.deepblueevent.DeepBlueEvent;
 import com.dragn0007.deepblue.deepblueitems.DeepBlueItems;
@@ -24,6 +25,8 @@ public class DeepBlueMain
     public DeepBlueMain()
     {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
+
         eventBus.addListener(this::setup);
         DeepBlueItems.register(eventBus);
         DeepBlueBlocks.register(eventBus);
@@ -41,5 +44,9 @@ public class DeepBlueMain
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("Hello, sharks! >> {}", DeepBlueEvent.GREATWHITE.get().getRegistryName());
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(DeepBlueEvent::registerSpawnPlacementsOnServer);
     }
 }
