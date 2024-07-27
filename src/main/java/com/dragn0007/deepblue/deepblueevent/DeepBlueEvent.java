@@ -15,7 +15,6 @@ import com.dragn0007.deepblue.entities.hammerhead.Hammerhead;
 import com.dragn0007.deepblue.entities.hammerhead.HammerheadRender;
 import com.dragn0007.deepblue.entities.krill_swarm.KrillSwarm;
 import com.dragn0007.deepblue.entities.krill_swarm.KrillSwarmRender;
-import com.dragn0007.deepblue.entities.krill_swarm.KrillSwarmVariant;
 import com.dragn0007.deepblue.entities.mako.Mako;
 import com.dragn0007.deepblue.entities.mako.MakoRender;
 import com.dragn0007.deepblue.entities.shrimp_swarm.ShrimpSwarm;
@@ -54,7 +53,7 @@ public class DeepBlueEvent {
                     "mako").toString()));
     public static final RegistryObject<EntityType<BlueWhale>> BLUEWHALE = ENTITY_TYPES.register
             ("bluewhale", () -> EntityType.Builder.of
-                    (BlueWhale::new, MobCategory.WATER_AMBIENT).sized(5f, 5f).build(new ResourceLocation(DeepBlueMain.MODID,
+                    (BlueWhale::new, MobCategory.WATER_AMBIENT).sized(8f, 8f).build(new ResourceLocation(DeepBlueMain.MODID,
                     "bluewhale").toString()));
     public static final RegistryObject<EntityType<WhaleShark>> WHALESHARK = ENTITY_TYPES.register
             ("whaleshark", () -> EntityType.Builder.of

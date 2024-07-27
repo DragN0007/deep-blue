@@ -1,6 +1,5 @@
 package com.dragn0007.deepblue;
 
-import com.dragn.bettas.event.BettaEvent;
 import com.dragn0007.deepblue.deepblueblocks.DeepBlueBlocks;
 import com.dragn0007.deepblue.deepblueevent.DeepBlueEvent;
 import com.dragn0007.deepblue.deepblueitems.DeepBlueItems;

@@ -1,8 +1,5 @@
 package com.dragn0007.deepblue.entities;
 
-import com.dragn0007.deepblue.deepblueitems.DeepBlueItems;
-import com.dragn0007.deepblue.entities.krill_swarm.KrillSwarm;
-import com.dragn0007.deepblue.entities.shrimp_swarm.ShrimpSwarm;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -54,6 +51,10 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob, B
 
     public boolean removeWhenFarAway(double p_27492_) {
         return !this.fromBucket() && !this.hasCustomName();
+    }
+
+    public boolean canBreatheUnderwater() {
+        return true;
     }
 
     protected void defineSynchedData() {
@@ -125,18 +126,17 @@ public abstract class AbstractShark extends WaterAnimal implements NeutralMob, B
         return new WaterBoundPathNavigation(this, p_27480_);
     }
 
-    public void travel(Vec3 p_27490_) {
+    public void travel(Vec3 p27490) {
         if (this.isEffectiveAi() && this.isInWater()) {
-            this.moveRelative(0.01F, p_27490_);
+            this.moveRelative(0.2F, p27490);
             this.move(MoverType.SELF, this.getDeltaMovement());
-            this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
+            this.setDeltaMovement(this.getDeltaMovement().scale(0D));
             if (this.getTarget() == null) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
             }
         } else {
-            super.travel(p_27490_);
+            super.travel(p27490);
         }
-
     }
 
     public void aiStep() {

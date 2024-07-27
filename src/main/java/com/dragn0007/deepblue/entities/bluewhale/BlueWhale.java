@@ -2,7 +2,6 @@ package com.dragn0007.deepblue.entities.bluewhale;
 
 import com.dragn.bettas.BettasMain;
 import com.dragn0007.deepblue.deepblueitems.DeepBlueItems;
-import com.dragn0007.deepblue.entities.AbstractMarineMammal;
 import com.dragn0007.deepblue.entities.AbstractSchoolingMarineMammal;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;

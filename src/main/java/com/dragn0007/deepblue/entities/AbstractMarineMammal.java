@@ -1,10 +1,8 @@
 package com.dragn0007.deepblue.entities;
 
-import com.dragn0007.deepblue.deepblueevent.DeepBlueEvent;
 import com.dragn0007.deepblue.deepblueitems.DeepBlueItems;
 import com.dragn0007.deepblue.entities.krill_swarm.KrillSwarm;
 import com.dragn0007.deepblue.entities.shrimp_swarm.ShrimpSwarm;
-import com.google.common.collect.Sets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -24,12 +22,9 @@ import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Bucketable;
-import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -37,14 +32,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Random;
-import java.util.Set;
-import java.util.function.Predicate;
 
 public abstract class AbstractMarineMammal extends WaterAnimal implements Bucketable {
     protected AbstractMarineMammal(EntityType<? extends AbstractMarineMammal> p_30341_, Level p_30342_) {
@@ -129,7 +122,7 @@ public abstract class AbstractMarineMammal extends WaterAnimal implements Bucket
     }
 
     public boolean canBreatheUnderwater() {
-        return false;
+        return true;
     }
 
     protected void handleAirSupply(int p_28326_) {
@@ -195,6 +188,19 @@ public abstract class AbstractMarineMammal extends WaterAnimal implements Bucket
         return false;
     }
 
+
+    public void travel(Vec3 p27490) {
+        if (this.isEffectiveAi() && this.isInWater()) {
+            this.moveRelative(0.2F, p27490);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement().scale(0D));
+            if (this.getTarget() == null) {
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
+            }
+        } else {
+            super.travel(p27490);
+        }
+    }
 
     static final TargetingConditions SWIM_WITH_PLAYER_TARGETING = TargetingConditions.forNonCombat().range(10.0D).ignoreLineOfSight();
     static class WhaleSwimWithPlayerGoal extends Goal {

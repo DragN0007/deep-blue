@@ -5,7 +5,7 @@ license="All rights reserved"
 
 [[mods]]
 modId="deepblue"
-version="${1.0}"
+version="${1.1}"
 displayName="DragN's Aquatics: Deep Blue Addon"
 logoFile="deepblue.png"
 authors="DragN0007"

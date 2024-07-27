@@ -1,6 +1,5 @@
 package com.dragn0007.deepblue.deepblueblocks.vox;
 
-import com.dragn0007.deepblue.deepblueblocks.rot.DecorRotator;
 import com.dragn0007.deepblue.deepblueblocks.rot.WaterloggableDecorRotator;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.BooleanOp;
