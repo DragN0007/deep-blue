@@ -3,7 +3,6 @@ package com.dragn0007.deepblue.entities.hammerhead;
 import com.dragn.bettas.BettasMain;
 import com.dragn0007.deepblue.deepblueitems.DeepBlueItems;
 import com.dragn0007.deepblue.entities.AbstractShark;
-import com.dragn0007.deepblue.entities.greatwhite.GreatWhiteVariant;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
